@@ -1,0 +1,11 @@
+{
+    "n": 1,
+    "turn_order": "AAA",
+    "moves": {
+      "A": [
+        {"type": "lift", "pole": 1},
+        {"type": "place", "pole": 2},
+        {"type": "lift", "pole": 2}
+      ]
+    }
+}

@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hanoi-crossing"
+version = "0.1.0"
+description = "Two-player Tower of Hanoi crossing game: engine and CLI"
+requires-python = ">=3.10"
+
+[project.scripts]
+hanoi-crossing = "hanoi_crossing.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
