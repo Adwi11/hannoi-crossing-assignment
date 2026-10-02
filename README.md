@@ -41,119 +41,100 @@ prompt : Build me a the util functions to run random games which send next playe
 ask for run type in cli argsparse (replay or random) and for replay ask for a json file adn for random there must be number of dics , max steps. Make it so that i can run the game via hanoi-crossing + args in cli
 
 
-# TESTS I ran
+# TESTS 
 
+| Command | Winner | Stop reason | Turns played |
+|---|---|---|---|
+| `hanoi-crossing replay game_test_replay.json` | none | turn_order_exhausted | 3 |
+| `hanoi-crossing random -n 4 --seed 42` | A | won | 944 |
+| `hanoi-crossing random -n 4 --seed 46` | A | won | 509 |
+
+### Replay
+
+```bash
 hanoi-crossing replay game_test_replay.json
+```
+
+<details>
+<summary>Output</summary>
+
+```json
 {
   "winner": null,
   "stop_reason": "turn_order_exhausted",
   "turns_played": 3,
-  "illegal_actions": {
-    "A": 0,
-    "B": 0
-  },
+  "illegal_actions": { "A": 0, "B": 0 },
   "final_state": {
     "n": 1,
     "turn": 3,
-    "poles": {
-      "A1": [],
-      "B1": [
-        2
-      ],
-      "SHARED": [],
-      "A3": [],
-      "B3": []
-    },
-    "hands": {
-      "A": 1,
-      "B": null
-    },
+    "poles": { "A1": [], "B1": [2], "SHARED": [], "A3": [], "B3": [] },
+    "hands": { "A": 1, "B": null },
     "winner": null,
     "over": false
   },
-  "unused_moves": {
-    "A": 0,
-    "B": 0
-  }
+  "unused_moves": { "A": 0, "B": 0 }
 }
+```
 
+</details>
 
+### Random, n = 4, seed 42
+
+```bash
 hanoi-crossing random -n 4 --seed 42
+```
+
+<details>
+<summary>Output (A wins)</summary>
+
+```json
 {
   "seed": 42,
   "winner": "A",
   "stop_reason": "won",
   "turns_played": 944,
-  "illegal_actions": {
-    "A": 0,
-    "B": 0
-  },
+  "illegal_actions": { "A": 0, "B": 0 },
   "final_state": {
     "n": 4,
     "turn": 597,
-    "poles": {
-      "A1": [],
-      "B1": [
-        8
-      ],
-      "SHARED": [],
-      "A3": [
-        5,
-        4,
-        1
-      ],
-      "B3": [
-        6,
-        3,
-        2
-      ]
-    },
-    "hands": {
-      "A": null,
-      "B": 7
-    },
+    "poles": { "A1": [], "B1": [8], "SHARED": [], "A3": [5, 4, 1], "B3": [6, 3, 2] },
+    "hands": { "A": null, "B": 7 },
     "winner": "A",
     "over": true
   }
 }
-❯ hanoi-crossing random -n 4 --seed 46
+```
+
+</details>
+
+### Random, n = 4, seed 46
+
+```bash
+hanoi-crossing random -n 4 --seed 46
+```
+
+<details>
+<summary>Output (A wins)</summary>
+
+```json
 {
   "seed": 46,
   "winner": "A",
   "stop_reason": "won",
   "turns_played": 509,
-  "illegal_actions": {
-    "A": 0,
-    "B": 0
-  },
+  "illegal_actions": { "A": 0, "B": 0 },
   "final_state": {
     "n": 4,
     "turn": 325,
-    "poles": {
-      "A1": [],
-      "B1": [
-        8,
-        4
-      ],
-      "SHARED": [],
-      "A3": [
-        5,
-        3
-      ],
-      "B3": [
-        6,
-        2,
-        1
-      ]
-    },
-    "hands": {
-      "A": null,
-      "B": 7
-    },
+    "poles": { "A1": [], "B1": [8, 4], "SHARED": [], "A3": [5, 3], "B3": [6, 2, 1] },
+    "hands": { "A": null, "B": 7 },
     "winner": "A",
     "over": true
   }
 }
+```
+
+</details>
 
 # Screen capture of creation of engine 
 https://drive.google.com/drive/folders/1aBnte7ShTOdmDdVh5eBVVV_dqH3OViVd?usp=sharing
