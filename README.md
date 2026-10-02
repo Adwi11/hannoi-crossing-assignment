@@ -13,5 +13,15 @@ Design decisions:
     winner=None,
 )
 
-# Used composer to write the next step function. opus 5.5 medium 
-# also fixed bugs in my code in engine 
+
+
+
+Where AI was significantly used:
+
+1. Used composer to write the next step function. opus 5.5 medium 
+
+prompt : I need to create the nextStep func basuically moving we will be return the turnresult in it.
+any player can have any turn at any time. you can chekc the action by calling on observing that action def observe(self, player):.
+if it is nont None or actionn is a skip then we will return self unchnaged else we will replace the turn wil self.turn +1  adn rest same  in the turn result 
+do similar for when legal 
+2. also fixed bugs in my code in engine 
