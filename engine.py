@@ -65,6 +65,13 @@ class Action:
     @classmethod
     def lift(cls, pole: int):
         return cls(ActionType.LIFT, pole)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"type": self.type.value, "pole": self.pole}
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "Action":
+        return cls(ActionType(d["type"]), d.get("pole"))
     
     @property
     def index(self,):
@@ -120,6 +127,28 @@ class Observation:
         if stack and stack[-1] < self.hand:
             return IllegalReason.SMALLER_DISK_ON_LARGER_DISK
         return None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "player": self.player.value,
+            "n": self.n,
+            "turn": self.turn,
+            "poles": [list(stack) for stack in self.poles],
+            "hand": self.hand,
+            "winner": self.winner.value if self.winner else None,
+            "over": self.over,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "Observation":
+        return cls(
+            player=Player(d["player"]),
+            n=d["n"],
+            turn=d["turn"],
+            poles=tuple(tuple(stack) for stack in d["poles"]),
+            hand=d["hand"],
+            winner=Player(d["winner"]) if d.get("winner") else None,
+        )
     
 @dataclass
 class CurrentState:
@@ -154,6 +183,27 @@ class CurrentState:
 
         # start state is both hands are empty
         return cls(n=n, turn=0, poles = tuple(poles), hands = (None, None), winner=None)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "n": self.n,
+            "turn": self.turn,
+            "poles": {pole.name: list(self.poles[pole]) for pole in Pole},
+            "hands": {player.value: self.hand(player) for player in Player},
+            "winner": self.winner.value if self.winner else None,
+            "over": self.over,
+        }
+
+    # winner is recomputed in __post_init__, so it is not read from the dict
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "CurrentState":
+        return cls(
+            n=d["n"],
+            turn=d["turn"],
+            poles=tuple(tuple(d["poles"][pole.name]) for pole in Pole),
+            hands=tuple(d["hands"][player.value] for player in Player),
+            winner=None,
+        )
     
     def hand(self, player):
         return self.hands[player.index()]
@@ -195,5 +245,21 @@ class TurnResult:
 
     def legal(self) -> bool:
         return self.reason is None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "state": self.state.to_dict(),
+            "action": self.action.to_dict(),
+            "reason": self.reason.value if self.reason else None,
+            "legal": self.legal(),
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict[str, Any]) -> "TurnResult":
+        return cls(
+            state=CurrentState.from_dict(d["state"]),
+            action=Action.from_dict(d["action"]),
+            reason=IllegalReason(d["reason"]) if d.get("reason") else None,
+        )
 
     

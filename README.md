@@ -25,3 +25,11 @@ any player can have any turn at any time. you can chekc the action by calling on
 if it is nont None or actionn is a skip then we will return self unchnaged else we will replace the turn wil self.turn +1  adn rest same  in the turn result 
 do similar for when legal 
 2. also fixed bugs in my code in engine 
+
+3. converting class results to dict so need not import class everytime (to dict and from dict)
+
+
+
+
+# Screen capture of creation of engine 
+https://drive.google.com/drive/folders/1aBnte7ShTOdmDdVh5eBVVV_dqH3OViVd?usp=sharing
