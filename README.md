@@ -1,22 +1,22 @@
+Early requirements:
 1. we will need a state and action. 
 2. post action we need to see the state again.
+3. winner is also possible when all discs on it's pole 3 is not their own
 
 Design decisions:
 1. Will be storing stack in a pole in () tuple
-2. {A1:(),B1:(),2:(),A3:(),B3:()} state storage
+2. {A1:(),B1:(),SHARED:(),A3:(),B3:()} state storage
 3. Will have Observation + CurrentState -> might merge into one but we must not since gamestate can show the other player's hand so someone can invoke it and cheat.
-4. Current state would return CurrentState(
-    n=1,
-    turn=0,
-    poles=(..., ..., ..., ..., ...),  # full internal 5-pole layout
-    hands=(None, None),
-    winner=None,
-)
+4. example current state  when  player A lifts disk 1 (n=2)
+{"n": 2, "turn": 1,
+ "poles": {"A1": [3], "B1": [4, 2], "SHARED": [], "A3": [], "B3": []},
+ "hands": {"A": 1, "B": null},
+ "winner": null, "over": false}
 
 
 
 
-Where AI was significantly used:
+Where AI was significantly used in engine:
 
 1. Used composer to write the next step function. opus 5.5 medium 
 
